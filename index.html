@@ -45,58 +45,6 @@
           <button class="sub-tab-btn" data-target="tab-quick-links" role="tab" type="button">Quick Tools</button>
         </div>
 
-        <!-- SUB TAB 1: UPI QR -->
-        <div id="tab-upi-qr" class="sub-section tool-card">
-          <div class="card-header">
-            <h3>UPI QR Code Generator</h3>
-            <p>Create a scannable UPI payment QR code.</p>
-          </div>
-
-          <form class="form-stack" onsubmit="return false;">
-            <div class="form-grid">
-              <div class="form-group">
-                <label for="upi-id">UPI ID <span class="req">*</span></label>
-                <input type="text" id="upi-id" class="input-field" placeholder="Enter UPI ID" value="Q" required>
-              </div>
-
-              <div class="form-group">
-                <label for="upi-handle">UPI Handle <span class="req">*</span></label>
-                <div class="select-wrapper">
-                  <select id="upi-handle" class="select-field">
-                    <option value="@ybl" selected>@ybl</option>
-                    <option value="@paytm">@paytm</option>
-                    <option value="@okhdfcbank">@okhdfcbank</option>
-                    <option value="@oksbi">@oksbi</option>
-                    <option value="@ibl">@ibl</option>
-                    <option value="@axl">@axl</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-
-            <div class="form-actions">
-              <button type="button" id="btn-generate-qr" class="btn btn-primary">
-                Generate QR Code
-              </button>
-              <button type="button" id="btn-reset-qr" class="btn btn-secondary">Reset</button>
-            </div>
-          </form>
-
-          <!-- Result Area -->
-          <div id="qr-result-box" class="qr-result-box hidden">
-            <div id="qr-canvas-container" class="qr-code-canvas-wrapper"></div>
-            <div class="qr-actions">
-              <button type="button" id="btn-download-qr" class="btn btn-secondary btn-sm">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
-                Download QR
-              </button>
-            </div>
-            <div class="qr-vpa-text">
-              VPA: <strong id="vpa-display-text">Q@ybl</strong>
-            </div>
-          </div>
-        </div>
-
         <!-- SUB TAB 2: MDR CALCULATOR -->
         <div id="tab-mdr" class="sub-section tool-card hidden">
           <div class="card-header">
