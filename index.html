@@ -4,12 +4,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Calcify — Financial Calculator & LMS Generator</title>
-  <meta name="description" content="calculate MDR, access resolution tools, and create professional LMS comments.">
+  <meta name="description" content="Generate UPI QR codes, calculate MDR, access resolution tools, and create professional LMS comments.">
   <link rel="icon" type="image/png" href="logo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2&#8377;family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <!-- SheetJS, PapaParse, jsPDF, html2canvas for Calcify_docs -->
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body>
   <div class="app-wrapper">
@@ -26,6 +32,9 @@
       <button class="main-tab-btn" data-target="lms-generator-section" type="button">
         LMS Generator
       </button>
+      <button class="main-tab-btn" data-target="calcify-docs-section" type="button">
+        Calcify_docs
+      </button>
     </nav>
 
     <!-- ======================================================== -->
@@ -35,17 +44,17 @@
       <div class="section-wrapper">
         <div class="section-header">
           <h2 class="section-title">Financial Calculator</h2>
-          <p class="section-desc">calculate MDR, and Quick Links</p>
+          <p class="section-desc">Generate UPI QR codes, calculate MDR, and Quick Links</p>
         </div>
 
         <!-- Sub Tabs -->
         <div class="sub-nav" role="tablist">
           <button class="sub-tab-btn active" data-target="tab-mdr" role="tab" type="button">MDR</button>
-          <button class="sub-tab-btn" data-target="tab-quick-links" role="tab" type="button">Quick Tools</button>
+          <button class="sub-tab-btn" data-target="tab-quick-links" role="tab" type="button">Quick Links</button>
         </div>
 
-        <!-- SUB TAB 2: MDR CALCULATOR -->
-        <div id="tab-mdr" class="sub-section tool-card hidden">
+        <!-- SUB TAB 1: MDR CALCULATOR -->
+        <div id="tab-mdr" class="sub-section tool-card">
           <div class="card-header">
             <h3>MDR Calculator</h3>
             <p>Calculate MDR percentage or deductions for POS transactions.</p>
@@ -60,12 +69,12 @@
 
               <div class="form-grid">
                 <div class="form-group">
-                  <label for="mdr-calc1-amount">Transaction Amount (₹) <span class="req">*</span></label>
+                  <label for="mdr-calc1-amount">Transaction Amount (&#8377;) <span class="req">*</span></label>
                   <input type="number" id="mdr-calc1-amount" class="input-field" placeholder="Enter amount" step="any">
                 </div>
 
                 <div class="form-group">
-                  <label for="mdr-calc1-deductions">Deductions (₹) <span class="req">*</span></label>
+                  <label for="mdr-calc1-deductions">Deductions (&#8377;) <span class="req">*</span></label>
                   <input type="number" id="mdr-calc1-deductions" class="input-field" placeholder="Enter deductions" step="any">
                 </div>
               </div>
@@ -81,7 +90,7 @@
                 </div>
                 <div class="result-row">
                   <span class="result-label">Net Settlement:</span>
-                  <span class="result-value" id="mdr-res1-net">₹0.00</span>
+                  <span class="result-value" id="mdr-res1-net">&#8377;0.00</span>
                 </div>
               </div>
             </div>
@@ -94,7 +103,7 @@
 
               <div class="form-grid">
                 <div class="form-group">
-                  <label for="mdr-calc2-amount">Transaction Amount (₹) <span class="req">*</span></label>
+                  <label for="mdr-calc2-amount">Transaction Amount (&#8377;) <span class="req">*</span></label>
                   <input type="number" id="mdr-calc2-amount" class="input-field" placeholder="Enter amount" step="any">
                 </div>
 
@@ -111,11 +120,11 @@
               <div id="mdr-res2-card" class="result-card hidden">
                 <div class="result-row">
                   <span class="result-label">Total Deductions:</span>
-                  <span class="result-value result-highlight" id="mdr-res2-ded">₹0.00</span>
+                  <span class="result-value result-highlight" id="mdr-res2-ded">&#8377;0.00</span>
                 </div>
                 <div class="result-row">
                   <span class="result-label">Net Settlement:</span>
-                  <span class="result-value" id="mdr-res2-net">₹0.00</span>
+                  <span class="result-value" id="mdr-res2-net">&#8377;0.00</span>
                 </div>
               </div>
             </div>
@@ -272,11 +281,11 @@
                       <strong class="sub-link-title">T&C Link</strong>
                     </div>
                     <div class="sub-link-actions">
-                      <button type="button" class="btn btn-secondary btn-sm btn-share-link" data-url="https://play.google.com/store/apps/details?id=com.phonepe.app.business" data-title="T&C Link (For Merchant)">
+                      <button type="button" class="btn btn-secondary btn-sm btn-share-link" data-url="https://play.google.com/store/apps/details&#8377;id=com.phonepe.app.business" data-title="T&C Link (For Merchant)">
                         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
                         <span>Share</span>
                       </button>
-                      <a href="https://play.google.com/store/apps/details?id=com.phonepe.app.business" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm">
+                      <a href="https://play.google.com/store/apps/details&#8377;id=com.phonepe.app.business" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm">
                         <span>Open</span>
                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
                       </a>
@@ -356,7 +365,7 @@
                       <span style="font-size: 0.78rem; color: #0284c7; margin-top: 2px;">himanshu.nayak@phonepe.com & divija.vaidya@phonepe.com</span>
                     </div>
                     <div class="sub-link-actions">
-                      <a href="mailto:himanshu.nayak@phonepe.com?cc=divija.vaidya@phonepe.com&subject=Payment%20Gateway%20Merchant%20Query" class="btn btn-primary btn-sm">
+                      <a href="mailto:himanshu.nayak@phonepe.com&#8377;cc=divija.vaidya@phonepe.com&subject=Payment%20Gateway%20Merchant%20Query" class="btn btn-primary btn-sm">
                         <span>Mail Query</span>
                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
                       </a>
@@ -391,13 +400,13 @@
 
               <!-- Average Basket Value -->
               <div class="form-group">
-                <label for="lms-avg-basket">Average Basket Value (₹) <span class="req">*</span></label>
+                <label for="lms-avg-basket">Average Basket Value (&#8377;) <span class="req">*</span></label>
                 <input type="number" id="lms-avg-basket" class="input-field" placeholder="e.g. 1000" required step="any">
               </div>
 
               <!-- Monthly TPV -->
               <div class="form-group">
-                <label for="lms-monthly-tpv">Monthly TPV (₹ lakh) <span class="req">*</span></label>
+                <label for="lms-monthly-tpv">Monthly TPV (&#8377; lakh) <span class="req">*</span></label>
                 <input type="number" id="lms-monthly-tpv" class="input-field" placeholder="e.g. 4" required step="any">
               </div>
 
@@ -455,7 +464,7 @@
                 <input type="text" id="lms-renewed-val" class="input-field" placeholder="e.g. 1.30 or 199/month">
               </div>
 
-              <!-- Currently Using POS? -->
+              <!-- Currently using Pos -->
               <div class="form-group full-width">
                 <label for="lms-using-pos">Currently using Pos <span class="req">*</span></label>
                 <div class="select-wrapper">
@@ -522,6 +531,128 @@
       </div>
     </main>
 
+    <!-- ======================================================== -->
+    <!-- SECTION 3: CALCIFY_DOCS (DATA FILTER & EXPORTER)         -->
+    <!-- ======================================================== -->
+    <main id="calcify-docs-section" class="main-section hidden">
+      <div class="section-wrapper">
+        <div class="tool-card">
+          <div class="card-header" style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px;">
+            <div>
+              <h3>Calcify_docs</h3>
+              <p>Upload any spreadsheet to filter, row-sort, and export in Image, PDF, or Excel.</p>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <div id="docs-file-badge" class="tag-badge hidden" style="background: #ecfdf5; color: #047857; font-size: 0.82rem; padding: 6px 12px; font-weight: 700;">
+                <span id="docs-file-name">No file</span>
+              </div>
+              <input type="file" id="docs-file-input" class="hidden" accept=".xlsx,.xls,.csv,.tsv" style="display: none;">
+              <button type="button" id="btn-docs-upload" class="btn btn-primary btn-sm" style="display: flex; align-items: center; gap: 6px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg>
+                <span>Upload File</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Empty State when no file is uploaded -->
+          <div id="docs-empty-state" class="docs-empty-dropzone" style="cursor: pointer;">
+            <div class="link-icon-circle" style="background: #eef2ff; color: var(--primary-color); width: 60px; height: 60px; margin: 0 auto 14px;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg>
+            </div>
+            <h4 style="font-size: 1.05rem; font-weight: 700; color: var(--text-main); margin-bottom: 6px;">Upload an Excel or CSV File</h4>
+            <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 16px;">Drag & drop your spreadsheet here, or click the button below (.xlsx, .xls, .csv)</p>
+            <button type="button" class="btn btn-primary" id="btn-docs-choose-file">
+              <span>Choose Spreadsheet File</span>
+            </button>
+          </div>
+
+          <!-- Data Controls & Table (shown after upload) -->
+          <div id="docs-data-workspace" class="hidden" style="display: flex; flex-direction: column; gap: 18px;">
+            
+            <!-- Filter Controls Card -->
+            <div class="docs-controls-card">
+              <div style="font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); margin-bottom: 12px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 6px;">
+                <span>Dynamic 2-Step Filter & Row Sort</span>
+                <span style="font-weight: 500; text-transform: none;">Columns remain in original uploaded order</span>
+              </div>
+
+              <div class="form-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+                <!-- 1st Filter: Column -->
+                <div class="form-group">
+                  <label for="docs-filter-col" style="font-weight: 700;">Column:</label>
+                  <select id="docs-filter-col" class="input-field" style="background: #f8fafc; font-weight: 600;"></select>
+                </div>
+
+                <!-- 2nd Filter: Value -->
+                <div class="form-group">
+                  <label for="docs-filter-val" style="font-weight: 700;">Value:</label>
+                  <select id="docs-filter-val" class="input-field" style="background: #ecfdf5; font-weight: 700; color: #065f46; border-color: #a7f3d0;"></select>
+                </div>
+
+                <!-- Sort Rows By -->
+                <div class="form-group">
+                  <label for="docs-sort-col" style="font-weight: 700;">Sort Rows By:</label>
+                  <div style="display: flex; gap: 6px;">
+                    <select id="docs-sort-col" class="input-field" style="flex: 1;"></select>
+                    <button type="button" id="btn-docs-sort-order" class="btn btn-secondary btn-sm" style="font-weight: 700; padding: 0 14px;">Asc</button>
+                  </div>
+                </div>
+
+                <!-- Quick Keyword Search -->
+                <div class="form-group">
+                  <label for="docs-search-input" style="font-weight: 700;">Quick Keyword Search:</label>
+                  <input type="text" id="docs-search-input" class="input-field" placeholder="Search any keyword...">
+                </div>
+              </div>
+
+              <!-- Column Visibility Toggles -->
+              <div style="margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border-color); display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px;">
+                <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                  <span style="font-size: 0.72rem; font-weight: 800; text-transform: uppercase; color: var(--text-muted);">Visible Columns:</span>
+                  <div id="docs-col-toggles" style="display: flex; gap: 6px; flex-wrap: wrap;"></div>
+                </div>
+                <div style="display: flex; gap: 8px;">
+                  <button type="button" id="btn-docs-hide-ids" class="btn btn-secondary btn-sm" style="font-size: 0.75rem;">Hide ID Columns</button>
+                  <button type="button" id="btn-docs-show-all-cols" class="btn btn-secondary btn-sm" style="font-size: 0.75rem;">Show All Columns</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Action Bar with Export Buttons -->
+            <div class="docs-export-bar" style="display: flex; justify-content: flex-end; align-items: center; gap: 8px; flex-wrap: wrap; background: #ffffff; padding: 12px 16px; border-radius: 12px; border: 1px solid var(--border-color);">
+              <button type="button" id="btn-docs-download-png" class="btn btn-primary btn-sm" style="display: flex; align-items: center; gap: 6px; background: linear-gradient(135deg, #4f46e5, #7c3aed);">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+                <span>Download Image (.png)</span>
+              </button>
+              <button type="button" id="btn-docs-download-pdf" class="btn btn-sm" style="display: flex; align-items: center; gap: 6px; background: #e11d48; color: #fff;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
+                <span>Download PDF (.pdf)</span>
+              </button>
+              <button type="button" id="btn-docs-download-excel" class="btn btn-sm" style="display: flex; align-items: center; gap: 6px; background: #059669; color: #fff;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><path d="M8 13h2"/><path d="M8 17h2"/><path d="M14 13h2"/><path d="M14 17h2"/></svg>
+                <span>Download Excel (.xlsx)</span>
+              </button>
+              <button type="button" id="btn-docs-copy-clipboard" class="btn btn-secondary btn-sm" title="Copy Table to Clipboard">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+              </button>
+            </div>
+
+            <!-- Clean Data Table Container -->
+            <div class="docs-table-wrapper" style="background: #ffffff; border-radius: 12px; border: 1px solid var(--border-color); overflow: hidden; box-shadow: var(--shadow-sm);">
+              <div style="overflow-x: auto; max-height: 550px;">
+                <table id="docs-report-table" class="docs-table" style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.85rem;">
+                  <thead id="docs-table-head"></thead>
+                  <tbody id="docs-table-body"></tbody>
+                  <tfoot id="docs-table-foot"></tfoot>
+                </table>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </main>
+
     <!-- Footer -->
     <footer class="app-footer">
       <p>Created by:- <strong>Tharun Kumar</strong></p>
@@ -534,7 +665,6 @@
     </footer>
   </div>
 
-  <script src="qrcode.min.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
