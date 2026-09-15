@@ -90,8 +90,12 @@ function initNavigation() {
   drawerItems.forEach(item => {
     item.addEventListener('click', () => {
       const targetId = item.dataset.target;
-      switchSection(targetId);
-      closeDrawer();
+      if (targetId) {
+        switchSection(targetId);
+        closeDrawer();
+      } else if (item.tagName === 'A') {
+        closeDrawer();
+      }
     });
   });
 
@@ -113,6 +117,7 @@ function initNavigation() {
   });
 }
 
+// -------------------------------------------------------------
 // -------------------------------------------------------------
 // 2. MDR Calculator (Dual Mode)
 // -------------------------------------------------------------
@@ -1824,3 +1829,5 @@ function initCalcifyDocs() {
     });
   });
 }
+
+// -------------------------------------------------------------
